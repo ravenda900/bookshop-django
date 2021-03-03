@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Book Shop - {% block title %}Home{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+            }
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+
+<header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom shadow-sm">
+    <a class="h5 my-0 me-md-auto fw-normal text-decoration-none text-dark" href="{% url 'home' %}">Book Shop</a>
+    <nav class="my-2 my-md-0 me-md-3">
+        <a class="p-2 text-dark" href="#">Sell a book</a>
+        <a class="p-2 text-dark" href="#">Signup</a>
+    </nav>
+</header>
+
+<main>
+    {% block body_block %}{% endblock %}
+</main>
+
+{% load static %}
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+</body>
+</html>

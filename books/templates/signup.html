@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+  <div class="container">
+        <div class="col-md-4 offset-md-4">
+            <h1 class="my-5 text-center">Sign up</h1>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <label for="{{ form.first_name.id_for_label }}" class="col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-9">
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.first_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.last_name.id_for_label }}" class="col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-9">
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.last_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.age.id_for_label }}" class="col-sm-3 col-form-label">Age</label>
+                    <div class="col-sm-9">
+                        {{ form.age }}
+                        {% if form.age.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.age.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.age.id_for_label }}" class="col-sm-3 col-form-label">Address</label>
+                    <div class="col-sm-9">
+                        {{ form.address_barangay }}
+                        {% if form.address_barangay.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.address_barangay.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-9 offset-sm-3">
+                        {{ form.address_street }}
+                        {% if form.address_street.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.address_street.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-9 offset-sm-3">
+                        {{ form.address_city }}
+                        {% if form.address_city.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.address_city.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="col-sm-3 col-form-label">Username</label>
+                    <div class="col-sm-9">
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.password1.id_for_label }}" class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-9">
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.password1.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.password2.id_for_label }}" class="col-sm-3 col-form-label">Password Confirmation</label>
+                    <div class="col-sm-9">
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="invalid-feedback">
+                              {{ form.password2.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mx-auto mt-5 text-center">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
