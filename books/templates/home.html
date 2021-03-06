@@ -5,10 +5,10 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Book Shop</h1>
-        <p class="lead text-muted">Morbi non tristique massa. Suspendisse arcu felis, placerat sagittis quam ac, tristique tincidunt mi. Aliquam enim metus, commodo id vehicula.</p>
+        <p class="lead text-muted">A book worm’s paradise</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          <a href="#" class="btn btn-primary my-2">Sell a book</a>
+          <a href="#" class="btn btn-secondary my-2">Buy a book</a>
         </p>
       </div>
     </div>
@@ -26,7 +26,7 @@
         {% for book in books %}
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ book.title }}</text></svg>
+            <img src="{{ book.image }}" alt="{{ book.title }}" />
 
             <div class="card-body">
               <p class="card-text">{{ book.title }}</p>
