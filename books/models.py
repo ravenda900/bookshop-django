@@ -20,12 +20,13 @@ def img_path(path, filename):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    age = models.IntegerField(default=0)
+    birthdate = models.DateField()
     address = models.CharField(max_length=255)
     balance = models.FloatField(default=0)
-    image = models.ImageField(upload_to=user_img_path)
+    image = models.ImageField(upload_to=user_img_path, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s, %s" % (self.user.last_name, self.user.first_name)
@@ -64,10 +65,3 @@ class BookSale(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-
-
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()

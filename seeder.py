@@ -38,11 +38,13 @@ def seed():
 
     print("Seeding user profile...")
     for i in range(20):
-        profile = Profile.objects.get(pk=(i+2))
-        profile.age = random.randint(18, 60)
-        profile.address = faker.address()
-        profile.balance = round(random.uniform(0, 50000), 2)
-        profile.image = "https://picsum.photos/200"
+        profile = Profile.objects.create(
+            birthdate=faker.past_date(),
+            address=faker.address,
+            balance=round(random.uniform(0, 50000), 2),
+            image="https://loremflickr.com/200/200/person?random=%d&lock=%d" % (i + 1, i + 1),
+            user=User.objects.get(pk=(i + 2))
+        )
         print("%s seeded" % profile)
     print("User profile seeding complete")
 
@@ -57,7 +59,7 @@ def seed():
             year=random.randint(1990, 2021),
             quantity=random.randint(1, 30),
             price=round(random.uniform(100, 1000), 2),
-            image="https://picsum.photos/420/225"
+            image="https://loremflickr.com/420/225/bookcover?random=%d&lock=%d" % (i + 1, i + 1)
         )
         print("%s seeded" % book)
     print("Book seeding completed.")
