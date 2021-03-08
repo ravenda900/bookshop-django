@@ -22,7 +22,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user, user_profile = form.save()
+            user = form.save()
 
             current_site = get_current_site(request)
             subject = 'Activate your account'
@@ -38,7 +38,7 @@ def signup(request):
 
             return redirect('login')
     else:
-        form = SignUpForm(initial={'is_active': False})
+        form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form })
 
 

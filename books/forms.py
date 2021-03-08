@@ -22,10 +22,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name',
-                  'email', 'birthdate', 'address', 'username', 'password1', 'password2', 'is_active')
-        widgets = {
-            'is_active': HiddenInput(),
-        }
+                  'email', 'birthdate', 'address', 'username', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -35,14 +32,20 @@ class SignUpForm(UserCreationForm):
     def save(self, commit=True):
         if not commit:
             raise NotImplementedError("Can't create User and UserProfile without database save")
-        user = super(SignUpForm, self).save(commit=True)
+
+        user = super(SignUpForm, self).save(commit=False)
+        user.is_active = False
+
+        if commit:
+            user.save()
+
         user_profile = Profile(
             user=user,
             birthdate=self.cleaned_data['birthdate'],
             address=self.cleaned_data['address']
         )
         user_profile.save()
-        return user, user_profile
+        return user
 
 
 class UserLoginForm(AuthenticationForm):

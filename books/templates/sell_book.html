@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="col-md-4 offset-md-4">
+      <h1 class="my-5 text-center">Sell A Book</h1>
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
+      <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label" for="{{ form.book_title.id_for_label }}">Title</label>
+          <div class="col-sm-10">
+            {{ form.book_title }}
+            {% if form.book_title.errors %}
+            <div class="invalid-feedback">
+              {{ form.book_title.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label" for="{{ form.book_genre.id_for_label }}">Genre</label>
+          <div class="col-sm-10">
+            {{ form.book_genre }}
+            {% if form.book_genre.errors %}
+            <div class="invalid-feedback">
+              {{ form.book_genre.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label" for="{{ form.book_year.id_for_label }}">Year</label>
+          <div class="col-sm-10">
+            {{ form.book_year }}
+            {% if form.book_year.errors %}
+            <div class="invalid-feedback">
+              {{ form.book_year.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label" for="{{ form.book_quantity.id_for_label }}">Quantity</label>
+          <div class="col-sm-10">
+            {{ form.book_quantity }}
+            {% if form.book_quantity.errors %}
+            <div class="invalid-feedback">
+              {{ form.book_quantity.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label" for="{{ form.book_price.id_for_label }}">Price</label>
+          <div class="col-sm-10">
+            {{ form.book_price }}
+            {% if form.book_price.errors %}
+            <div class="invalid-feedback">
+              {{ form.book_price.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label" for="{{ form.book_image.id_for_label }}">Image</label>
+          <div class="col-sm-10">
+            {{ form.book_image }}
+            {% if form.book_image.errors %}
+            <div class="invalid-feedback">
+              {{ form.book_image.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mx-auto mt-5 text-center">
+          <button class="btn btn-primary" type="submit">Sell this book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

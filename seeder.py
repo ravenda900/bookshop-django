@@ -40,9 +40,10 @@ def seed():
     for i in range(20):
         profile = Profile.objects.create(
             birthdate=faker.past_date(),
-            address=faker.address,
+            address=faker.address(),
             balance=round(random.uniform(0, 50000), 2),
             image="https://loremflickr.com/200/200/person?random=%d&lock=%d" % (i + 1, i + 1),
+            email_confirmed=faker.boolean(),
             user=User.objects.get(pk=(i + 2))
         )
         print("%s seeded" % profile)
