@@ -1,8 +1,7 @@
-from pprint import pprint
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.forms import HiddenInput
 from .models import Profile
 
 class DateInput(forms.DateInput):
@@ -24,6 +23,9 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('first_name', 'last_name',
                   'email', 'birthdate', 'address', 'username', 'password1', 'password2', 'is_active')
+        widgets = {
+            'is_active': HiddenInput(),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

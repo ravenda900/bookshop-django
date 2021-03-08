@@ -18,25 +18,32 @@
     <form method="post">
       {% csrf_token %}
       {% for field in form %}
-        <div class="row mb-3">
-          <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
-          <div class="col-sm-9">
-            <input type="{{ field.widget_type }}"
-             name="{{ field.name }}"
-             class="form-control{% if field.errors %} is-invalid{% endif %}"
-             id="{{ field.auto_id }}"
-             {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}
-             maxlength="{{ field.field.max_length }}"{% if forloop.counter0 == 0 %} autofocus{% endif %}>
-            {% for error in field.errors %}
-              <div class="invalid-feedback">
-                {{ error }}
-              </div>
-            {% endfor %}
-            {% if field.help_text %}
-              <div class="form-text">{{ field.help_text|safe }}</div>
-            {% endif %}
+        {% if field.widget_type == 'hidden' %}
+          <input type="{{ field.widget_type }}"
+               name="{{ field.name }}"
+               id="{{ field.auto_id }}"
+               {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}>
+        {% else %}
+          <div class="row mb-3">
+            <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+            <div class="col-sm-9">
+              <input type="{{ field.widget_type }}"
+               name="{{ field.name }}"
+               class="form-control{% if field.errors %} is-invalid{% endif %}"
+               id="{{ field.auto_id }}"
+               {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}
+               maxlength="{{ field.field.max_length }}"{% if forloop.counter0 == 0 %} autofocus{% endif %}>
+              {% for error in field.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+              {% if field.help_text %}
+                <div class="form-text">{{ field.help_text|safe }}</div>
+              {% endif %}
+            </div>
           </div>
-        </div>
+        {% endif %}
       {% endfor %}
 
       <div class="mx-auto mt-5 text-center">

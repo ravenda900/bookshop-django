@@ -38,7 +38,7 @@ def signup(request):
 
             return redirect('login')
     else:
-        form = SignUpForm()
+        form = SignUpForm(initial={'is_active': False})
     return render(request, 'registration/signup.html', {'form': form })
 
 
