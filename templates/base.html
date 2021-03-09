@@ -15,11 +15,20 @@
     <a class="h5 my-0 me-md-auto fw-normal text-decoration-none text-dark" href="{% url 'home' %}">Book Shop</a>
     <nav class="my-2 my-md-0 me-md-3">
         {% if user.is_authenticated %}
-            <a class="p-2 text-dark" href="#">Sell a book</a>
+            <a class="p-2 text-dark" href="{% url 'sell_book' %}">Sell a book</a>
             <a class="nav-link dropdown-toggle p-2 text-dark d-inline-block" data-bs-toggle="dropdown" href="#">{{ user.first_name }} {{ user.last_name }}</a>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="p-2 text-dark" href="{% url 'logout' %}">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'add_balance' %}">Add Balance</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'posted_books' %}">My Posted Books</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'sold_books' %}">My Sold Books</a>
                 </li>
             </ul>
         {% else %}

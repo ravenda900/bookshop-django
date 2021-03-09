@@ -19,7 +19,7 @@ faker = Faker()
 
 def seed():
     print("Seeding superuser...")
-    User.objects.create_superuser(username="admin", password="admin")
+    User.objects.create_superuser(username="admin", password="admin", first_name="Super", last_name="Administrator")
     print("Superuser seeding completed.")
 
     print("Seeding user...")
@@ -33,7 +33,7 @@ def seed():
             first_name=first_name,
             last_name=last_name
         )
-        print("%s seeded" % user)
+        print("%s, %s seeded" % (last_name, first_name))
     print("User seeding completed.")
 
     print("Seeding user profile...")
@@ -46,7 +46,7 @@ def seed():
             email_confirmed=faker.boolean(),
             user=User.objects.get(pk=(i + 2))
         )
-        print("%s seeded" % profile)
+        print("%s's profile seeded" % profile)
     print("User profile seeding complete")
 
     print("Seeding book...")

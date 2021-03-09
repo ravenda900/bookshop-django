@@ -6,16 +6,16 @@ from uuid import uuid4
 
 
 def user_img_path(instance, filename):
-    return img_path("users", filename)
+    return img_path('users', filename)
 
 
 def book_img_path(instance, filename):
-    return img_path("books", filename)
+    return img_path('books', filename)
 
 
 def img_path(path, filename):
     name, ext = filename.split('.')
-    return "%s/%s.%s" % (path, uuid4().hex, ext)
+    return '%s/%s.%s' % (path, uuid4().hex, ext)
 
 
 class Profile(models.Model):
@@ -29,7 +29,7 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return "%s, %s" % (self.user.last_name, self.user.first_name)
+        return '%s, %s' % (self.user.last_name, self.user.first_name)
 
 
 class Book(models.Model):
@@ -46,7 +46,7 @@ class Book(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s (%s) by %s" % (self.title, self.year, self.author)
+        return '%s (%s) by %s' % (self.title, self.year, self.author)
 
     class Meta:
         ordering = ['-created_at']
@@ -61,7 +61,7 @@ class BookSale(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s x %s = %1.2f" % (self.book, self.quantity, self.quantity * self.price_per_piece)
+        return '%s x %s = %1.2f' % (self.book, self.quantity, self.quantity * self.price_per_piece)
 
     class Meta:
         ordering = ['-created_at']
