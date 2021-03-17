@@ -58,7 +58,15 @@ class UserLoginForm(AuthenticationForm):
 class SellBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = [
+            'title',
+            'author',
+            'description',
+            'genre',
+            'year',
+            'quantity',
+            'price',
+        ]
 
 
 class AddBalanceForm(forms.ModelForm):

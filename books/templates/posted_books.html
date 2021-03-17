@@ -29,16 +29,18 @@
       </tr>
     </thead>
     <tbody>
-      {% for book in books %}
+      {% for posted_book in posted_books %}
         <tr>
-          <td>{{ book.title }}</td>
-          <td>{{ book.year }}</td>
-          <td>{{ book.genre }}</td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.description }}</td>
-          <td>{{ book.price }}</td>
-          <td>{{ book.quantity }}</td>
-          <td>{{ book.image }}</td>
+          <td>{{ posted_book.title }}</td>
+          <td>{{ posted_book.year }}</td>
+          <td>{{ posted_book.genre }}</td>
+          <td>{{ posted_book.author }}</td>
+          <td>{{ posted_book.description }}</td>
+          <td>{{ posted_book.price }}</td>
+          <td>{{ posted_book.quantity }}</td>
+          <td>
+            <img src="{{ posted_book.image }}" alt="{{ posted_book.title }}">
+          </td>
         </tr>
       {% empty %}
         <tr>

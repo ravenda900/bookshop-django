@@ -68,7 +68,12 @@ def sell_book(request):
     if request.method == 'POST':
         form = SellBookForm(request.POST)
         if form.is_valid():
-            book = form.save()
+            book = form.save(commit=False)
+            last_inserted_id = Book.objects.first().id
+            book.seller = request.user
+            book.image = "https://loremflickr.com/420/225/bookcover?random=%d&lock=%d" % (last_inserted_id, last_inserted_id)
+            book.save()
+
             messages.success(request, '%s has been posted' % book)
 
             return redirect('posted_books')
