@@ -16,7 +16,7 @@
     <nav class="my-2 my-md-0 me-md-3">
         {% if user.is_authenticated %}
             <a class="p-2 text-dark" href="{% url 'sell_book' %}">Sell a book</a>
-            <a class="nav-link dropdown-toggle p-2 text-dark d-inline-block" data-bs-toggle="dropdown" href="#">{{ user.first_name }} {{ user.last_name }}</a>
+            <a class="nav-link dropdown-toggle p-2 text-dark d-inline-block" data-bs-toggle="dropdown" href="#">{{ user.first_name.title }} {{ user.last_name.title }}</a>
             <ul class="dropdown-menu">
                 <li>
                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>

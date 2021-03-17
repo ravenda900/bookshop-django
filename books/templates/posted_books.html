@@ -31,10 +31,10 @@
     <tbody>
       {% for posted_book in posted_books %}
         <tr>
-          <td>{{ posted_book.title }}</td>
+          <td>{{ posted_book.title.title }}</td>
           <td>{{ posted_book.year }}</td>
-          <td>{{ posted_book.genre }}</td>
-          <td>{{ posted_book.author }}</td>
+          <td>{{ posted_book.genre.title }}</td>
+          <td>{{ posted_book.author.title }}</td>
           <td>{{ posted_book.description }}</td>
           <td>{{ posted_book.price }}</td>
           <td>{{ posted_book.quantity }}</td>

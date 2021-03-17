@@ -55,6 +55,7 @@ def activate_account(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.profile.email_confirmed = True
+        user.profile.save()
         user.save()
         login(request, user)
         messages.success(request, 'Your account have been confirmed.')
@@ -96,13 +97,16 @@ def sold_books(request):
 
 def add_balance(request):
     if request.method == 'POST':
-        form = SellBookForm(request.POST)
+        form = AddBalanceForm(request.POST)
         if form.is_valid():
-            book = form.save()
-            messages.success(request, '%s has been posted' % book)
+            user = request.user
+            user.profile.balance = user.profile.balance + float(request.POST.get('balance'))
+            user.profile.save()
+            messages.success(request, "Successfully added ₱%s balance to your account" % request.POST.get('balance'))
+            messages.error(request, "Your total amount is ₱%1.2f" % user.profile.balance, 'danger')
 
-            return redirect('home')
+            return redirect('add_balance')
     else:
-        form = SellBookForm()
-    return render(request, 'sell_book.html', {'form': form})
+        form = AddBalanceForm()
+    return render(request, 'add_balance.html', {'form': form})
 
