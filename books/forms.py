@@ -34,6 +34,8 @@ class SignUpForm(UserCreationForm):
             raise NotImplementedError('Can\'t create User and UserProfile without database save')
 
         user = super(SignUpForm, self).save(commit=False)
+        last_inserted_id = User.objects.last().id
+        user.profile.image = "https://loremflickr.com/420/225/bookcover?random=%d&lock=%d" % (last_inserted_id + 1, last_inserted_id + 1)
         user.is_active = False
 
         if commit:

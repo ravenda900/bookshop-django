@@ -6,3 +6,7 @@ a:hover,
 a:active {
     text-decoration: underline;
 }
+
+body {
+    background-color: #999;
+}

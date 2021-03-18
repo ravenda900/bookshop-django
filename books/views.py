@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import Http404
 from django.shortcuts import render, redirect
 from .models import Book
 from django.contrib.auth import login
@@ -20,7 +22,7 @@ def home(request):
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        raise Http404("Cannot access this page.")
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -37,7 +39,7 @@ def signup(request):
             })
             user.email_user(subject, message)
 
-            messages.success(request, 'Please confirm your email to complete registration.')
+            messages.success(request, 'Please confirm your email to complete the registration.')
 
             return redirect('login')
     else:
@@ -58,13 +60,15 @@ def activate_account(request, uidb64, token):
         user.profile.save()
         user.save()
         login(request, user)
-        messages.success(request, 'Your account have been confirmed.')
+        messages.success(request, 'Your account has been confirmed. Please login to continue.')
+        return redirect('login')
     else:
-        messages.warning(request, 'The confirmation link was invalid, possibly because it has already been used.')
+        messages.warning(request, 'The confirmation link was invalid, possibly because it has already been used/incorrect')
 
     return redirect('home')
 
 
+@login_required(login_url="/login")
 def sell_book(request):
     if request.method == 'POST':
         form = SellBookForm(request.POST)
@@ -77,24 +81,32 @@ def sell_book(request):
 
             messages.success(request, '%s has been posted' % book)
 
-            return redirect('posted_books')
+            return redirect('books_for_sale')
     else:
         form = SellBookForm()
     return render(request, 'sell_book.html', {'form': form})
 
 
-def posted_books(request):
+@login_required(login_url="/login")
+def books_for_sale(request):
     books = Book.objects.filter(seller=request.user)
 
-    return render(request, 'posted_books.html', {'posted_books': books})
+    return render(request, 'books.html', {
+        'books': books,
+        'title': 'Books for Sale'
+    })
 
 
-def sold_books(request):
+@login_required(login_url="/login")
+def purchased_books(request):
     books = Book.objects.filter(seller=request.user)
 
-    return render(request, 'sold_books.html', {'sold_books': books})
+    return render(request, 'books.html', {'books': books,
+        'title': 'Purchased Books'
+    })
 
 
+@login_required(login_url="/login")
 def add_balance(request):
     if request.method == 'POST':
         form = AddBalanceForm(request.POST)
@@ -110,3 +122,14 @@ def add_balance(request):
         form = AddBalanceForm()
     return render(request, 'add_balance.html', {'form': form})
 
+
+@login_required(login_url="/login")
+def profile(request, username):
+    if request.user.username != username:
+        raise Http404("Cannot access this page.")
+    return render(request, 'profile.html')
+
+
+@login_required(login_url="/login")
+def book_detail(request, id):
+    return render(request, 'book_detail.html')

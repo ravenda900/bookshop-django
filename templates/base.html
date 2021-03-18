@@ -19,16 +19,19 @@
             <a class="nav-link dropdown-toggle p-2 text-dark d-inline-block" data-bs-toggle="dropdown" href="#">{{ user.first_name.title }} {{ user.last_name.title }}</a>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                </li>
-                <li>
                     <a class="dropdown-item" href="{% url 'add_balance' %}">Add Balance</a>
+                    <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'books_for_sale' %}">My Books for Sale</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="{% url 'posted_books' %}">My Posted Books</a>
+                    <a class="dropdown-item" href="{% url 'purchased_books' %}">My Purchased Books</a>
                 </li>
+                <li><hr class="dropdown-divider"></li>
                 <li>
-                    <a class="dropdown-item" href="{% url 'sold_books' %}">My Sold Books</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                 </li>
             </ul>
         {% else %}
@@ -40,7 +43,7 @@
     {% endif %}
 </header>
 
-<main class="flex-shrink-0">
+<main class="flex-shrink-0 py-3">
     {% block content %}{% endblock %}
 </main>
 
