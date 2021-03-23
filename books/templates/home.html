@@ -30,11 +30,12 @@
 
             <div class="card-body">
               <h5 class="card-title">{{ book.title }}</h5>
-              <p class="card-text">Description: {{ book.description }}</p>
+              <p class="card-text">Description: {{ book.description.title }}</p>
               <p class="card-text">Quantity: {{ book.quantity }}</p>
-              <p class="card-text">Price: {{ book.price }}</p>
+              <p class="card-text">Price: ₱ {{ book.price }}</p>
               <p class="card-text">Author: {{ book.author }}</p>
               <p class="card-text">Genre: {{ book.genre }}</p>
+              <p class="card-text">Seller: {{ book.seller.profile }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <a href="{% url 'book_detail' book.id %}" class="btn btn-sm btn-outline-secondary">View Details</a>

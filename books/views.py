@@ -157,10 +157,21 @@ def book_detail(request, id):
 @login_required(login_url="/login")
 def cart_items(request):
     book_items = request.session.get('book_items', [])
+    books = []
+    total_price = 0
 
-    books = Book.objects.filter(pk__in=book_items)
+    book_list = Book.objects.filter(pk__in=book_items)
+    for book in book_list:
+        count = book_items.count(book.id)
+        books.append({
+            'count': book_items.count(book.id),
+            'model': book
+        })
+        total_price += count * book.price
+
     return render(request, 'cart_items.html', {
-        'books': books
+        'books': books,
+        'total_price': total_price
     })
 
 
@@ -168,13 +179,19 @@ def cart_items(request):
 @csrf_exempt
 def add_items_to_cart(request, book_item):
     book_items = request.session.get('book_items', [])
-    if not book_item in book_items:
-        book_items.append(book_item)
-        request.session['book_items'] = book_items
+    book_items.append(book_item)
+    request.session['book_items'] = book_items
 
-        return JsonResponse({'success': 'Successfully added item to cart'}, status=200)
-    else:
-        return JsonResponse({'error': 'You already added this in the cart'}, status=400)
+    return JsonResponse({'success': 'Successfully added item to cart'}, status=200)
+
+@login_required(login_url="/login")
+def cancel_items(request):
+    request.session['book_items'] = []
+    return redirect('home')
+
+@login_required(login_url="/login")
+def checkout(request):
+    return render(request, 'checkout.html')
 
 
 

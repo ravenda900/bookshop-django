@@ -12,6 +12,7 @@ urlpatterns = [
     path('purchased-books', views.purchased_books, name='purchased_books'),
     path('profile/<str:username>', views.profile, name='profile'),
     path('cart-items', views.cart_items, name='cart_items'),
-    path('add-items-to-cart/<int:book_item>', views.add_items_to_cart, name="add_items_to_cart")
-    # path('checkout', views.sold_books, name='sold_books')
+    path('add-items-to-cart/<int:book_item>', views.add_items_to_cart, name="add_items_to_cart"),
+    path('cancel-items', views.cancel_items, name="cancel_items"),
+    path('checkout', views.checkout, name='checkout')
 ]

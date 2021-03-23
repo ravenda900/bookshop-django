@@ -4,7 +4,6 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <!-- Column -->
         <div class="col-md-9 col-lg-9">
             <div class="card">
                 <div class="card-header bg-info">
@@ -26,30 +25,37 @@
                             <tbody>
                             {% for book in books %}
                             <tr>
-                                <td width="150"><img alt="{{ book.title }}" src="{{ book.image }}" width="80">
+                                <td width="150"><img alt="{{ book.model.title }}" src="{{ book.model.image }}" width="80">
                                 </td>
                                 <td width="550">
-                                    <h5 class="font-500">{{ book.title }}</h5>
-                                    <p>{{ book.description }}</p>
+                                    <h5 class="font-500">{{ book.model.itle }}</h5>
+                                    <p>{{ book.model.description }}</p>
                                 </td>
-                                <td>₱ <span class="book-price">{{ book.price }}</span></td>
+                                <td>₱ <span class="book-price">{{ book.model.price }}</span></td>
                                 <td width="70">
-                                    <input class="form-control book-quantity-input" value="1" type="number">
+                                    <input class="form-control book-quantity-input" value="{{ book.count }}" type="number">
                                 </td>
-                                <td align="center" class="font-500" width="150">₱ <span class="book-total">{{ book.price }}</span></td>
+                                {% load mathfilters %}
+                                <td align="center" class="font-500" width="150">₱ <span class="book-total">{{ book.model.price|mul:book.count }}</span></td>
                                 <td align="center"><a class="text-inverse" data-original-title="Delete" data-toggle="tooltip"
                                                       href="javascript:void(0)" title=""><i
                                         class="fa fas-trash text-dark"></i></a></td>
                             </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6">
+                                        <h5 class="text-muted text-center">Your cart is empty</h5>
+                                    </td>
+                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                         <hr>
                         <div class="d-flex no-block align-items-center">
-                            <button class="btn btn-dark btn-outline"><i class="fas fa-arrow-left"></i> Continue shopping
-                            </button>
+                            <a href="{% url 'home' %}" class="btn btn-dark btn-outline"><i class="fas fa-arrow-left"></i> Continue shopping
+                            </a>
                             <div class="ml-auto">
-                                <button class="btn btn-danger"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+                                <a href="{% url 'checkout' %}" class="btn btn-danger"><i class="fa fa fa-shopping-cart"></i> Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -63,10 +69,10 @@
                     <h5 class="card-title">CART SUMMARY</h5>
                     <hr>
                     <small>Total Price</small>
-                    <h2>$612</h2>
+                    <h2 id="totalPrice">₱ {{ total_price }}</h2>
                     <hr>
-                    <button class="btn btn-success">Checkout</button>
-                    <button class="btn btn-secondary btn-outline">Cancel</button>
+                    <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
+                    <a href="{% url 'cancel_items' %}" class="btn btn-secondary btn-outline">Cancel</a>
                 </div>
             </div>
             <div class="card">
