@@ -12,9 +12,13 @@
 <body class="d-flex flex-column h-100">
 
 <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom shadow-sm">
-    <a class="h5 my-0 me-md-auto fw-normal text-decoration-none text-dark" href="{% url 'home' %}">Book Shop</a>
+    <a class="h5 my-0 me-md-auto fw-normal text-decoration-none text-dark" href="{% url 'home' %}"><i class="fas fa-book"></i> Book Shop</a>
     <nav class="my-2 my-md-0 me-md-3">
         {% if user.is_authenticated %}
+            <a class="p-2 text-dark" href="{% url 'cart_items' %}">
+                <i class="fas fa-shopping-cart"></i> Cart Items
+                <span class="badge bg-dark" id="cart-items-count">{{ request.session.book_items|length }}</span>
+            </a>
             <a class="p-2 text-dark" href="{% url 'sell_book' %}">Sell a book</a>
             <a class="nav-link dropdown-toggle p-2 text-dark d-inline-block" data-bs-toggle="dropdown" href="#">{{ user.first_name.title }} {{ user.last_name.title }}</a>
             <ul class="dropdown-menu">
@@ -57,7 +61,7 @@
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
+{% block scripts %}{% endblock %}
 
 </body>
 </html>

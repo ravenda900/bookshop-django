@@ -5,7 +5,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Book Shop</h1>
-        <p class="lead text-muted">A book worm’s paradise</p>
+        <p class="lead">A book worm’s paradise</p>
         <p>
           <a href="{% url 'sell_book' %}" class="btn btn-primary my-2">Sell a book</a>
           <a href="#" class="btn btn-secondary my-2">Buy a book</a>
@@ -29,13 +29,16 @@
             <img src="{{ book.image }}" alt="{{ book.title }}" />
 
             <div class="card-body">
-              <p class="card-text">{{ book.title }}</p>
+              <h5 class="card-title">{{ book.title }}</h5>
+              <p class="card-text">Description: {{ book.description }}</p>
               <p class="card-text">Quantity: {{ book.quantity }}</p>
               <p class="card-text">Price: {{ book.price }}</p>
+              <p class="card-text">Author: {{ book.author }}</p>
+              <p class="card-text">Genre: {{ book.genre }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <a href="{% url 'book_detail' book.id %}" class="btn btn-sm btn-outline-secondary">View Details</a>
-                  <button type="button" class="btn btn-sm btn-primary">Add to Cart</button>
+                  <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-book-id="{{ book.id }}">Add to Cart</button>
                 </div>
                 {% load humanize %}
                 <small class="text-muted">{{ book.created_at|naturaltime }}</small>
@@ -47,4 +50,9 @@
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+{% load static %}
+<script src="{% static 'js/add-items-to-cart.js' %}"></script>
 {% endblock %}

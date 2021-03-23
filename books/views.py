@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect
 from .models import Book
 from django.contrib.auth import login
@@ -11,7 +11,8 @@ from django.utils.encoding import force_bytes
 from django.contrib import messages
 from .tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
-from .forms import SignUpForm, SellBookForm, AddBalanceForm
+from django.views.decorators.csrf import csrf_exempt
+from .forms import SignUpForm, SellBookForm, AddBalanceForm, UpdateProfileForm
 
 
 def home(request):
@@ -59,7 +60,6 @@ def activate_account(request, uidb64, token):
         user.profile.email_confirmed = True
         user.profile.save()
         user.save()
-        login(request, user)
         messages.success(request, 'Your account has been confirmed. Please login to continue.')
         return redirect('login')
     else:
@@ -115,7 +115,7 @@ def add_balance(request):
             user.profile.balance = user.profile.balance + float(request.POST.get('balance'))
             user.profile.save()
             messages.success(request, "Successfully added ₱%s balance to your account" % request.POST.get('balance'))
-            messages.error(request, "Your total amount is ₱%1.2f" % user.profile.balance, 'danger')
+            messages.success(request, "Your total amount is ₱%1.2f" % user.profile.balance)
 
             return redirect('add_balance')
     else:
@@ -125,11 +125,56 @@ def add_balance(request):
 
 @login_required(login_url="/login")
 def profile(request, username):
-    if request.user.username != username:
-        raise Http404("Cannot access this page.")
-    return render(request, 'profile.html')
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST)
+
+        if form.is_valid():
+            user = request.user
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+            user.save()
+            user.profile.address = request.POST.get('address')
+            user.profile.birthdate = request.POST.get('birthdate')
+            user.profile.save()
+
+            messages.success(request, 'Successfully updated profile')
+    else:
+        form = UpdateProfileForm()
+        if request.user.username != username:
+            raise Http404("Cannot access this page.")
+    return render(request, 'profile.html', {'form': form})
 
 
 @login_required(login_url="/login")
 def book_detail(request, id):
-    return render(request, 'book_detail.html')
+    book = Book.objects.get(pk=id)
+
+    return render(request, 'book_detail.html', {
+        'book': book
+    })
+
+
+@login_required(login_url="/login")
+def cart_items(request):
+    book_items = request.session.get('book_items', [])
+
+    books = Book.objects.filter(pk__in=book_items)
+    return render(request, 'cart_items.html', {
+        'books': books
+    })
+
+
+@login_required(login_url="/login")
+@csrf_exempt
+def add_items_to_cart(request, book_item):
+    book_items = request.session.get('book_items', [])
+    if not book_item in book_items:
+        book_items.append(book_item)
+        request.session['book_items'] = book_items
+
+        return JsonResponse({'success': 'Successfully added item to cart'}, status=200)
+    else:
+        return JsonResponse({'error': 'You already added this in the cart'}, status=400)
+
+
+

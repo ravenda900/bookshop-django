@@ -3,53 +3,60 @@
 
 {% block content %}
 <div class="container">
-  <div class="col-md-4 offset-md-4">
-    <h1 class="my-5 text-center">Sign up</h1>
-    {% if form.non_field_errors %}
-      <div class="alert alert-danger" role="alert">
-        <ul class="list-unstyled">
-          {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
 
-    <form method="post">
-      {% csrf_token %}
-      {% for field in form %}
-        {% if field.widget_type == 'hidden' %}
-          <input type="{{ field.widget_type }}"
-               name="{{ field.name }}"
-               id="{{ field.auto_id }}"
-               {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}>
-        {% else %}
-          <div class="row mb-3">
-            <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
-            <div class="col-sm-9">
-              <input type="{{ field.widget_type }}"
-               name="{{ field.name }}"
-               class="form-control{% if field.errors %} is-invalid{% endif %}"
-               id="{{ field.auto_id }}"
-               {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}
-               maxlength="{{ field.field.max_length }}"{% if forloop.counter0 == 0 %} autofocus{% endif %}>
-              {% for error in field.errors %}
-                <div class="invalid-feedback">
-                  {{ error }}
+                    <h3 class="mb-5 mt-3 text-center">Sign up</h3>
+                    {% if form.non_field_errors %}
+                      <div class="alert alert-danger" role="alert">
+                        <ul class="list-unstyled">
+                          {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+
+                    <form method="post">
+                      {% csrf_token %}
+                      {% for field in form %}
+                        {% if field.widget_type == 'hidden' %}
+                          <input type="{{ field.widget_type }}"
+                               name="{{ field.name }}"
+                               id="{{ field.auto_id }}"
+                               {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}>
+                        {% else %}
+                          <div class="row mb-3">
+                            <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                            <div class="col-sm-9">
+                              <input type="{{ field.widget_type }}"
+                               name="{{ field.name }}"
+                               class="form-control{% if field.errors %} is-invalid{% endif %}"
+                               id="{{ field.auto_id }}"
+                               {% if field.value != None %}value="{{ field.value|stringformat:'s' }}"{% endif %}
+                               maxlength="{{ field.field.max_length }}"{% if forloop.counter0 == 0 %} autofocus{% endif %}>
+                              {% for error in field.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                              {% endfor %}
+                              {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text|safe }}</div>
+                              {% endif %}
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+
+                      <div class="mx-auto my-5 text-center">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                      </div>
+                    </form>
                 </div>
-              {% endfor %}
-              {% if field.help_text %}
-                <div class="form-text">{{ field.help_text|safe }}</div>
-              {% endif %}
             </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-
-      <div class="mx-auto my-5 text-center">
-        <button type="submit" class="btn btn-primary">Register</button>
-      </div>
-    </form>
-  </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -9,4 +9,8 @@ a:active {
 
 body {
     background-color: #999;
+    color: #fff;
+}
+.card {
+    color: #666;
 }

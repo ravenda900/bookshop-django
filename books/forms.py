@@ -16,8 +16,6 @@ class SignUpForm(UserCreationForm):
     birthdate = forms.DateField(widget=DateInput)
     address = forms.CharField()
     use_required_attribute = False
-    error_css_class = 'is-invalid'
-    required_css_class = 'required'
 
     class Meta:
         model = User
@@ -35,7 +33,6 @@ class SignUpForm(UserCreationForm):
 
         user = super(SignUpForm, self).save(commit=False)
         last_inserted_id = User.objects.last().id
-        user.profile.image = "https://loremflickr.com/420/225/bookcover?random=%d&lock=%d" % (last_inserted_id + 1, last_inserted_id + 1)
         user.is_active = False
 
         if commit:
@@ -44,7 +41,8 @@ class SignUpForm(UserCreationForm):
         user_profile = Profile(
             user=user,
             birthdate=self.cleaned_data['birthdate'],
-            address=self.cleaned_data['address']
+            address=self.cleaned_data['address'],
+            image="https://loremflickr.com/420/225/bookcover?random=%d&lock=%d" % (last_inserted_id + 1, last_inserted_id + 1)
         )
         user_profile.save()
         return user
@@ -75,3 +73,12 @@ class AddBalanceForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['balance']
+
+
+class UpdateProfileForm(forms.ModelForm):
+    birthdate = forms.DateField(widget=DateInput)
+    address = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'address', 'birthdate']
